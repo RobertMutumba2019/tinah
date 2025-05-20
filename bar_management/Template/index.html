@@ -1,3 +1,6 @@
+{% load static %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,26 +12,20 @@
 
 <!-- Favicons
     ================================================== -->
-<link rel="shortcut icon" href="img/fav.png" type="image/png">
+<link rel="shortcut icon" href="{% static 'img/fav.png' %}" type="image/png">
 
 <!-- Bootstrap -->
-<link rel="stylesheet" type="text/css"  href="css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" type="text/css"  href="{% static 'css/bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
 
 <!-- Stylesheet
     ================================================== -->
-<link rel="stylesheet" type="text/css"  href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/nivo-lightbox/nivo-lightbox.css">
-<link rel="stylesheet" type="text/css" href="css/nivo-lightbox/default.css">
+<link rel="stylesheet" type="text/css"  href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/nivo-lightbox.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/default.css' %}">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<script type="text/javascript" src="{% static 'js/modernizr.custom.js' %}"></script>
 
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 <!-- Navigation
@@ -37,15 +34,15 @@
   <div class="container"> 
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-play fa-code"></i> Hangover</a> </div>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+      data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand page-scroll" href="{% static '#page-top' %}"><i class="fa fa-play fa-code"></i> Hangover</a> </div>
     
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#page-top" class="page-scroll">Home</a></li>
-        <li><a href="#about" class="page-scroll">About</a></li>
-        <li><a href="#portfolio" class="page-scroll">Portfolio</a></li>
+        <li><a href="#Home" class="page-scroll">Home</a></li>
+        <li><a href="#portoflio" class="page-scroll">Client</a></li>
         <li><a href="#contact" class="page-scroll">Contact</a></li>
       </ul>
     </div>
@@ -66,25 +63,7 @@
     </div>
   </div>
 </header>
-<!-- About Section -->
-<div id="about">
-  <div class="container">
-    <div class="section-title text-center center">
-      <h2>About Me</h2>
-      <hr>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 col-md-6"> <img src="img/bartender.png" class="img-responsive" alt=""> </div>
-      <div class="col-xs-12 col-md-6">
-        <div class="about-text">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare.</p>
-          <a href="#portfolio" class="btn btn-default btn-lg page-scroll">My Portfolio</a> </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Portfolio Section -->
+
 <div id="portfolio">
   <div class="container">
     <div class="section-title text-center center">
@@ -266,13 +245,13 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="js/jquery.1.11.1.js"></script> 
-<script type="text/javascript" src="js/bootstrap.js"></script> 
-<script type="text/javascript" src="js/SmoothScroll.js"></script> 
-<script type="text/javascript" src="js/nivo-lightbox.js"></script> 
-<script type="text/javascript" src="js/jquery.isotope.js"></script> 
-<script type="text/javascript" src="js/jqBootstrapValidation.js"></script> 
-<script type="text/javascript" src="js/contact_me.js"></script> 
-<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.1.11.1.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/SmoothScroll.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/nivo-lightbox.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/jquery.isotope.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/jqBootstrapValidation.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/contact_me.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
