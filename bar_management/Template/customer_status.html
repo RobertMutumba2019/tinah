@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hangover</title>
+<title>DA WHITE RESIDENCE</title>
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -40,14 +40,15 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
       data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="navbar-brand page-scroll" href="{% static '#page-top' %}"><i class="fa fa-play fa-code"></i> Hangover</a> </div>
+      <a class="navbar-brand page-scroll" href="{% url 'index' %}">
+        <i class="fa fa-play fa-code"></i> DA WHITE RESIDENCE</a> </div>
     
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#Home" class="page-scroll">Home</a></li>
-        <li><a href="#portoflio" class="page-scroll">Client</a></li>
-        <li><a href="#contact" class="page-scroll">Contact</a></li>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'customer_status' %}">Client</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
       </ul>
     </div>
     <!-- /.navbar-collapse --> 
@@ -60,7 +61,7 @@
     <div class="container">
       <div class="row">
         <div class="intro-text">
-          <h1>Hangover</h1>
+          <h1>DA WHITE RESIDENCE</h1>
           <p>Web Design • Photography • Product Design</p>
           <a href="#about" class="btn btn-custom btn-lg page-scroll">Learn More</a> </div>
       </div>
@@ -91,110 +92,112 @@
         <div class="portfolio-items">
           <div class="col-sm-6 col-md-3 col-lg-3 web">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/01-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/01-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/01-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/01-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 product">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/02-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/02-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/02-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/02-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 web">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/03-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/03-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/03-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/03-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 web">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/04-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/04-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/04-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/04-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 product">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/05-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/05-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/05-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/05-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 photography">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/06-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/06-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/06-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/06-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 photography">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/07-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/07-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/07-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/07-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 web">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/08-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/08-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/08-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/08-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/08-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 product">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/09-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+                <img src="{% static 'img/portfolio/08-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
+                <div class="hover-bg"> <a href="{% static 'img/portfolio/09-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/09-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/09-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 photography">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/10-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/10-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/10-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/10-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 photography">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/11-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/11-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/11-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/11-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 col-lg-3 web">
             <div class="portfolio-item">
-              <div class="hover-bg"> <a href="img/portfolio/12-large.jpg" title="Project Title" data-lightbox-gallery="gallery1">
+              <div class="hover-bg"> <a href="{% static 'img/portfolio/12-large.jpg' %}" title="Project Title" data-lightbox-gallery="gallery1">
                 <div class="hover-text">
                   <h4>Project Title</h4>
                 </div>
-                <img src="img/portfolio/12-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                <img src="{% static 'img/portfolio/12-small.jpg' %}" class="img-responsive" alt="Project Title"> </a> </div>
             </div>
           </div>
         </div>
