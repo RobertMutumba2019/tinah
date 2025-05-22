@@ -35,7 +35,8 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
-      data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> 
+      <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <a class="navbar-brand page-scroll" href="{% url 'index' %}">
         <i class="fa fa-play fa-code"></i> DA WHITE RESIDENCE</a> </div>
     
@@ -58,12 +59,75 @@
       <div class="row">
         <div class="intro-text">
           <h1>DA WHITE RESIDENCE</h1>
-          <p>Web Design • Photography • Product Design</p>
+          <p>Bar • Garden • Acomodation Rooms</p>
         </div>
       </div>
     </div>
   </div>
 </header>
+<div id="portfolio">
+    <div class="container">
+      <div class="section-title text-center center">
+        <h2>Da White Services.</h2>
+        <hr>
+      </div>
+      <div class="categories">
+        <ul class="cat">
+          <li>
+            <ol class="type">
+          
+              <li><a data-filter="hover-bg">.Bar</a></li>
+              <li><a data-filter="hover-bg">.Garden</a></li>
+              <li><a data-filter="hover-bg">.Acommodation Rooms</a></li>
+            </ol>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="row">
+        <div class="portfolio-items">
+          <div class="col-sm-6 col-md-4 col-lg-4 web">
+            <div class="portfolio-item">
+              <div class="hover-bg"> <a href="{% static 'img/ba.jpg' %}"
+                 title="Da white" data-lightbox-gallery="gallery1">
+                <div class="hover-text">
+                  <h4>Da white Bar</h4>
+                </div>
+                <img src="{% static 'img/ba.jpg' %}"height="auto" width="100%" object-fit="cover"max-height="400"
+                class="img-responsive" alt="Da white"></a> </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-4 product">
+            <div class="portfolio-item">
+              <div class="hover-bg"> <a href="{% static 'img/ga.jpg' %}" 
+                title="Da White" data-lightbox-gallery="gallery1">
+                <div class="hover-text">
+                  <h4>Ambiance Env.</h4>
+                </div>
+               
+                <img src="{% static 'img/ga.jpg' %}" height="auto" width="100%" object-fit="cover"max-height="400"
+                class="img-responsive" alt="Da white"> </a> </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-4 web">
+            <div class="portfolio-item">
+              <div class="hover-bg"> <a href="{% static 'img/Rooom.jpg' %}" 
+                title="Da White" data-lightbox-gallery="gallery1">
+                <div class="hover-text">
+                  <h4>Resting Rooms.</h4>
+                </div>
+                <img src="{% static 'img/Rooom.jpg' %}"height="auto" width="100%" object-fit="cover"max-height="400"
+                class="img-responsive" alt="Da white"></a> </div>
+            </div>
+          </div>
+          
+          
+          
+      
+      </div>
+    </div>
+  </div>
+
 
 
 <!-- Contact Section -->
@@ -74,46 +138,44 @@
       <hr>
     </div>
     <div class="col-md-8 col-md-offset-2">
-      <form name="sentMessage" id="contactForm" novalidate>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <input type="text" id="name" class="form-control" placeholder="Name" required="required">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <input type="email" id="email" class="form-control" placeholder="Email" required="required">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
-          <p class="help-block text-danger"></p>
-        </div>
-        <div id="success"></div>
-        <button type="submit" class="btn btn-default btn-lg">Send Message</button>
-      </form>
-      <div class="social">
-        <ul>
-          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa fa-github"></i></a></li>
-          <li><a href="#"><i class="fa fa-codepen"></i></a></li>
-        </ul>
-      </div>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td>Manager Tinah</td>
+          </tr>
+          <tr>
+            <th>WhatsApp Contact</th>
+            <td>0777778</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>tinah@gmail.com</td>
+          </tr>
+          <tr>
+            <th>Mobile Contact</th>
+            <td>07512234</td>
+          </tr>
+          <tr>
+            <th>Location</th>
+            <td>Makerere Kikoni</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      
     </div>
   </div>
 </div>
 <div id="footer">
   <div class="container text-center">
     <div class="fnav">
-      <p>Copyright &copy; 2018 Hangover. Designed by <a href="https://codelatte.org/" rel="nofollow">Codelatte</a>.</p>
+      <p>Da white Residence. <br>Makerere, Kikoni</br></p>
+   
     </div>
   </div>
-</div>
+
+
 <script type="text/javascript" src="{% static 'js/jquery.1.11.1.js' %}"></script> 
 <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script> 
 <script type="text/javascript" src="{% static 'js/SmoothScroll.js' %}"></script> 

@@ -15,3 +15,12 @@ def contact(request):
 
 def index(request):
     return render(request, 'index.html')  # Ensure index.html exists
+
+def Bar(request):
+    return render(request, 'Bar.html')
+
+def Garden(request):
+    return render(request, 'Garden.html')
+
+def product(request):
+    return render(request, 'product.html')
