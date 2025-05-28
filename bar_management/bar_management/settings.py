@@ -128,5 +128,10 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Optional: Set a short session timeout (e.g., 5 minutes) for extra security
+SESSION_COOKIE_AGE = 300  # 5 minutes in seconds
+
 LOGIN_URL = '/login/'  # Redirects unauthenticated users to this URL
 LOGIN_REDIRECT_URL = '/customer_status/'  # Redirects after successful login

@@ -1,156 +1,481 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DA WHITE RESIDENCE - Client List</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}" type="image/png">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
-
-    <!-- Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/nivo-lightbox.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/default.css' %}">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="{% static 'js/modernizr.custom.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .negative-balance { color: red; }
-        .receipt-toggle { cursor: pointer; text-decoration: underline; }
-        .receipt-details { display: none; margin-top: 10px; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        /* Custom scrollbar for customer list */
+        .customer-list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .customer-list-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .customer-list-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .customer-list-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-    <!-- Navigation -->
-    <nav id="menu" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container"> 
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
-                        data-target="#bs-example-navbar-collapse-1"> 
-                    <span class="sr-only">Toggle navigation</span> 
-                    <span class="icon-bar"></span> 
-                    <span class="icon-bar"></span> 
-                    <span class="icon-bar"></span> 
-                </button>
-                <a class="navbar-brand page-scroll" href="{% url 'index' %}">
-                    <i class="fa fa-play fa-code"></i> DA WHITE RESIDENCE
-                </a> 
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Customer Status</h1>
+
+        <form id="customerForm" class="space-y-4">
+            <div>
+                <label for="customerName" class="block text-sm font-medium text-gray-700 mb-1">Customer Name:</label>
+                <input type="text" id="customerName" name="customerName" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'customer_status' %}">Client</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
-                </ul>
+
+            <div>
+                <label for="numBeers" class="block text-sm font-medium text-gray-700 mb-1">Number of Beers:</label>
+                <input type="number" id="numBeers" name="numBeers" min="0" value="0" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <div>
+                <label for="daysStayed" class="block text-sm font-medium text-gray-700 mb-1">Days Stayed:</label>
+                <input type="number" id="daysStayed" name="daysStayed" min="0" value="0" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <div>
+                <label for="beerPrice" class="block text-sm font-medium text-gray-700 mb-1">Price Per Beer (UGX):</label>
+                <input type="number" id="beerPrice" name="beerPrice" min="0" value="5000.00" step="0.01" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <div>
+                <label for="roomPrice" class="block text-sm font-medium text-gray-700 mb-1">Price Per Day (Room) (UGX):</label>
+                <input type="number" id="roomPrice" name="roomPrice" min="0" value="50000.00" step="0.01" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <div>
+                <label for="moneyInserted" class="block text-sm font-medium text-gray-700 mb-1">Money Inserted (UGX):</label>
+                <input type="number" id="moneyInserted" name="moneyInserted" min="0" value="0" step="0.01" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                Calculate Status
+            </button>
+            <button type="button" id="saveCustomerBtn"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out mt-2">
+                Save Customer
+            </button>
+            <button type="button" id="deleteCustomerBtn"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out mt-2">
+                Clear Form & Delete Customer
+            </button>
+        </form>
+
+        <div id="results" class="mt-6 p-4 bg-blue-50 rounded-md border border-blue-200 hidden">
+            <h2 class="text-xl font-semibold text-blue-800 mb-3">Customer Details:</h2>
+            <p class="text-gray-700 mb-1"><span class="font-medium">Customer Name:</span> <span id="displayCustomerName"></span></p>
+            <p class="text-gray-700 mb-1"><span class="font-medium">Total Price:</span> UGX<span id="displayTotalPrice"></span></p>
+            <p class="text-700 mb-1"><span class="font-medium">Money Inserted:</span> UGX<span id="displayMoneyInserted"></span></p>
+            <p class="text-gray-700"><span class="font-medium">Balance:</span> UGX<span id="displayBalance" class="font-bold"></span></p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Saved Customers:</h2>
+            <div id="customerList" class="border border-gray-200 rounded-md p-2 max-h-48 overflow-y-auto customer-list-container">
+                <p class="text-gray-500 text-sm" id="noCustomersMessage">No customers saved yet.</p>
+                </div>
+        </div>
+
+        <div id="messageBox" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4">
+                <h3 id="messageBoxTitle" class="text-lg font-semibold text-gray-800 mb-4"></h3>
+                <p id="messageBoxContent" class="text-gray-700 mb-6"></p>
+                <div class="flex justify-end space-x-3">
+                    <button id="messageBoxOk" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">OK</button>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <div class="container" style="margin-top: 80px;">
-        <h2>Client List</h2>
-        <p>DEBUG: {{ clients|length }} clients found.</p>
-        {% if client_form.errors %}
-            <p>Client Form Errors: {{ client_form.errors }}</p>
-        {% endif %}
-        {% if receipt_form.errors %}
-            <p>Receipt Form Errors: {{ receipt_form.errors }}</p>
-        {% endif %}
+        <div id="confirmBox" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4">
+                <h3 id="confirmBoxTitle" class="text-lg font-semibold text-gray-800 mb-4"></h3>
+                <p id="confirmBoxContent" class="text-gray-700 mb-6"></p>
+                <div class="flex justify-end space-x-3">
+                    <button id="confirmBoxCancel" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Cancel</button>
+                    <button id="confirmBoxConfirm" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Confirm</button>
+                </div>
+            </div>
+        </div>
 
-        <!-- Add Client Form -->
-        <h3>Add New Client</h3>
-        <form method="post" name="add_client">
-            {% csrf_token %}
-            {{ client_form.as_p }}
-            <button type="submit" name="add_client" class="btn btn-primary">Add Client</button>
-        </form>
-
-        <!-- Add Receipt Form -->
-        <h3>Add Receipt</h3>
-        <form method="post" name="add_receipt">
-            {% csrf_token %}
-            {{ receipt_form.as_p }}
-            <button type="submit" name="add_receipt" class="btn btn-primary">Add Receipt</button>
-        </form>
-
-        <!-- Client List Table -->
-        <table class="table table-bordered" style="margin-top: 20px;">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Contact</th>
-                    <th>Room Price/Day</th>
-                    <th>Days Stayed</th>
-                    <th>Beer Price</th>
-                    <th>Beers Taken</th>
-                    <th>Amount Paid</th>
-                    <th>Total Due</th>
-                    <th>Balance</th>
-                    <th>Receipts</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for customer_status in clients %}
-                <tr>
-                    <td>{{ customer_status.user.username }}</td>
-                    <td>{{ customer_status.contact|default:"N/A" }}</td>
-                    <td>{{ customer_status.room_price_per_day }}</td>
-                    <td>{{ customer_status.days_stayed }}</td>
-                    <td>{{ customer_status.beer_price }}</td>
-                    <td>{{ customer_status.beers_taken }}</td>
-                    <td>{{ customer_status.amount_paid }}</td>
-                    <td>{{ customer_status.compute_total_due }}</td>
-                    <td class="{% if customer_status.compute_balance < 0 %}negative-balance{% endif %}">
-                        {{ customer_status.compute_balance }}
-                    </td>
-                    <td>
-                        <span class="receipt-toggle" onclick="toggleReceipts('receipts-{{ customer_status.id }}')">View Receipts</span>
-                        <div id="receipts-{{ customer_status.id }}" class="receipt-details">
-                            {% for receipt in customer_status.receipts.all %}
-                                <p>Receipt #{{ receipt.id }}: {{ receipt.amount }} - {{ receipt.description }} ({{ receipt.created_at }})</p>
-                            {% empty %}
-                                <p>No receipts found.</p>
-                            {% endfor %}
-                        </div>
-                    </td>
-                    <td>
-                        <form method="post" onsubmit="return confirm('Are you sure you want to delete {{ customer_status.user.username }}?');">
-                            {% csrf_token %}
-                            <input type="hidden" name="client_id" value="{{ customer_status.id }}">
-                            <button type="submit" name="delete_client" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="11">No clients found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
     </div>
 
-    <!-- Scripts -->
-    <script type="text/javascript" src="{% static 'js/jquery.1.11.1.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/SmoothScroll.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/nivo-lightbox.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/jquery.isotope.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/jqBootstrapValidation.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/contact_me.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    {% verbatim %}
     <script>
-        function toggleReceipts(id) {
-            var element = document.getElementById(id);
-            element.style.display = element.style.display === 'none' ? 'block' : 'none';
+        // Removed hardcoded constants, now read from inputs
+        const LOCAL_STORAGE_KEY = 'customerData'; // Key for localStorage
+
+        // Get elements
+        const customerForm = document.getElementById('customerForm');
+        const customerNameInput = document.getElementById('customerName');
+        const numBeersInput = document.getElementById('numBeers');
+        const daysStayedInput = document.getElementById('daysStayed');
+        const beerPriceInput = document.getElementById('beerPrice');
+        const roomPriceInput = document.getElementById('roomPrice');
+        const moneyInsertedInput = document.getElementById('moneyInserted');
+
+        const resultsDiv = document.getElementById('results');
+        const displayCustomerName = document.getElementById('displayCustomerName');
+        const displayTotalPrice = document.getElementById('displayTotalPrice');
+        const displayMoneyInserted = document.getElementById('displayMoneyInserted');
+        const displayBalance = document.getElementById('displayBalance');
+
+        const saveCustomerBtn = document.getElementById('saveCustomerBtn');
+        const deleteCustomerBtn = document.getElementById('deleteCustomerBtn');
+        const customerListDiv = document.getElementById('customerList');
+        const noCustomersMessage = document.getElementById('noCustomersMessage');
+
+        const messageBox = document.getElementById('messageBox');
+        const messageBoxTitle = document.getElementById('messageBoxTitle');
+        const messageBoxContent = document.getElementById('messageBoxContent');
+        const messageBoxOk = document.getElementById('messageBoxOk');
+
+        const confirmBox = document.getElementById('confirmBox');
+        const confirmBoxTitle = document.getElementById('confirmBoxTitle');
+        const confirmBoxContent = document.getElementById('confirmBoxContent');
+        const confirmBoxCancel = document.getElementById('confirmBoxCancel');
+        const confirmBoxConfirm = document.getElementById('confirmBoxConfirm');
+
+        /**
+         * Displays a custom message box instead of alert().
+         * @param {string} title - The title of the message box.
+         * @param {string} message - The content message.
+         */
+        function showMessageBox(title, message) {
+            messageBoxTitle.textContent = title;
+            messageBoxContent.textContent = message;
+            messageBox.classList.remove('hidden');
         }
+
+        // Event listener for the OK button on the message box
+        messageBoxOk.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+        });
+
+        /**
+         * Displays a custom confirmation box.
+         * @param {string} title - The title of the confirmation box.
+         * @param {string} message - The content message.
+         * @returns {Promise<boolean>} A promise that resolves to true if confirmed, false if canceled.
+         */
+        function showConfirmBox(title, message) {
+            return new Promise((resolve) => {
+                confirmBoxTitle.textContent = title;
+                confirmBoxContent.textContent = message;
+                confirmBox.classList.remove('hidden');
+
+                const handleConfirm = () => {
+                    confirmBox.classList.add('hidden');
+                    confirmBoxConfirm.removeEventListener('click', handleConfirm);
+                    confirmBoxCancel.removeEventListener('click', handleCancel);
+                    resolve(true);
+                };
+
+                const handleCancel = () => {
+                    confirmBox.classList.add('hidden');
+                    confirmBoxConfirm.removeEventListener('click', handleConfirm);
+                    confirmBoxCancel.removeEventListener('click', handleCancel);
+                    resolve(false);
+                };
+
+                confirmBoxConfirm.addEventListener('click', handleConfirm);
+                confirmBoxCancel.addEventListener('click', handleCancel);
+            });
+        }
+
+
+        /**
+         * Validates form inputs.
+         * @returns {boolean} True if inputs are valid, false otherwise.
+         */
+        function validateInputs() {
+            const customerName = customerNameInput.value.trim();
+            const numBeers = parseInt(numBeersInput.value, 10);
+            const daysStayed = parseInt(daysStayedInput.value, 10);
+            const beerPrice = parseFloat(beerPriceInput.value);
+            const roomPrice = parseFloat(roomPriceInput.value);
+            const moneyInserted = parseFloat(moneyInsertedInput.value);
+
+            if (!customerName) {
+                showMessageBox('Input Error', 'Customer Name cannot be empty.');
+                return false;
+            }
+            if (isNaN(numBeers) || numBeers < 0) {
+                showMessageBox('Input Error', 'Number of Beers must be a non-negative number.');
+                return false;
+            }
+            if (isNaN(daysStayed) || daysStayed < 0) {
+                showMessageBox('Input Error', 'Days Stayed must be a non-negative number.');
+                return false;
+            }
+            if (isNaN(beerPrice) || beerPrice < 0) {
+                showMessageBox('Input Error', 'Price Per Beer must be a non-negative number.');
+                return false;
+            }
+            if (isNaN(roomPrice) || roomPrice < 0) {
+                showMessageBox('Input Error', 'Price Per Day (Room) must be a non-negative number.');
+                return false;
+            }
+            if (isNaN(moneyInserted) || moneyInserted < 0) {
+                showMessageBox('Input Error', 'Money Inserted must be a non-negative number.');
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * Calculates total price and balance.
+         * @param {number} numBeers
+         * @param {number} daysStayed
+         * @param {number} beerPrice
+         * @param {number} roomPrice
+         * @param {number} moneyInserted
+         * @returns {{totalPrice: number, balance: number}}
+         */
+        function calculateStatus(numBeers, daysStayed, beerPrice, roomPrice, moneyInserted) {
+            const beerCost = numBeers * beerPrice;
+            const roomCost = daysStayed * roomPrice;
+            const totalPrice = beerCost + roomCost;
+            const balance = moneyInserted - totalPrice;
+            return { totalPrice, balance };
+        }
+
+        /**
+         * Updates the display with customer details.
+         * @param {string} customerName
+         * @param {number} totalPrice
+         * @param {number} moneyInserted
+         * @param {number} balance
+         */
+        function updateDisplay(customerName, totalPrice, moneyInserted, balance) {
+            displayCustomerName.textContent = customerName;
+            displayTotalPrice.textContent = totalPrice.toFixed(2);
+            displayMoneyInserted.textContent = moneyInserted.toFixed(2);
+            displayBalance.textContent = balance.toFixed(2);
+
+            // Apply color based on balance
+            if (balance < 0) {
+                displayBalance.classList.remove('text-green-600');
+                displayBalance.classList.add('text-red-600');
+            } else {
+                displayBalance.classList.remove('text-red-600');
+                displayBalance.classList.add('text-green-600');
+            }
+            resultsDiv.classList.remove('hidden'); // Show the results section
+        }
+
+        /**
+         * Clears the form inputs and hides the results section.
+         */
+        function clearFormAndResults() {
+            customerNameInput.value = '';
+            numBeersInput.value = '0';
+            daysStayedInput.value = '0';
+            beerPriceInput.value = '5000.00'; // Reset to default UGX
+            roomPriceInput.value = '50000.00'; // Reset to default UGX
+            moneyInsertedInput.value = '0';
+            resultsDiv.classList.add('hidden');
+        }
+
+        /**
+         * Saves customer data to localStorage.
+         * @param {object} customerData - The customer object to save.
+         */
+        function saveCustomerToLocalStorage(customerData) {
+            let customers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+            // Check if customer already exists by name and update, otherwise add new
+            const existingIndex = customers.findIndex(c => c.customerName === customerData.customerName);
+            if (existingIndex > -1) {
+                customers[existingIndex] = customerData; // Update existing
+            } else {
+                customers.push(customerData); // Add new
+            }
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(customers));
+            renderCustomerList(); // Re-render the list after saving
+        }
+
+        /**
+         * Loads customer data from localStorage.
+         * @returns {Array<object>} An array of customer objects.
+         */
+        function loadCustomersFromLocalStorage() {
+            return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+        }
+
+        /**
+         * Renders the list of saved customers.
+         */
+        function renderCustomerList() {
+            const customers = loadCustomersFromLocalStorage();
+            customerListDiv.innerHTML = ''; // Clear existing list
+
+            if (customers.length === 0) {
+                noCustomersMessage.classList.remove('hidden');
+                customerListDiv.appendChild(noCustomersMessage);
+            } else {
+                noCustomersMessage.classList.add('hidden');
+                customers.forEach(customer => {
+                    const customerItem = document.createElement('div');
+                    customerItem.className = 'p-2 border-b border-gray-200 last:border-b-0 cursor-pointer hover:bg-gray-100 rounded-md transition duration-150 ease-in-out';
+                    customerItem.textContent = customer.customerName;
+                    customerItem.dataset.customerName = customer.customerName; // Store name for lookup
+                    customerItem.addEventListener('click', () => loadCustomerData(customer.customerName));
+                    customerListDiv.appendChild(customerItem);
+                });
+            }
+        }
+
+        /**
+         * Loads a specific customer's data into the form and updates display.
+         * @param {string} name - The name of the customer to load.
+         */
+        function loadCustomerData(name) {
+            const customers = loadCustomersFromLocalStorage();
+            const customer = customers.find(c => c.customerName === name);
+
+            if (customer) {
+                customerNameInput.value = customer.customerName;
+                numBeersInput.value = customer.numBeers;
+                daysStayedInput.value = customer.daysStayed;
+                // Provide default UGX values if prices were not saved with older customer data
+                beerPriceInput.value = customer.beerPrice !== undefined ? customer.beerPrice.toFixed(2) : '5000.00';
+                roomPriceInput.value = customer.roomPrice !== undefined ? customer.roomPrice.toFixed(2) : '50000.00';
+                moneyInsertedInput.value = customer.moneyInserted;
+
+                // Recalculate and display for the loaded customer
+                const { totalPrice, balance } = calculateStatus(
+                    customer.numBeers,
+                    customer.daysStayed,
+                    parseFloat(beerPriceInput.value), // Use value from input field after loading
+                    parseFloat(roomPriceInput.value), // Use value from input field after loading
+                    customer.moneyInserted
+                );
+                updateDisplay(customer.customerName, totalPrice, customer.moneyInserted, balance);
+            } else {
+                showMessageBox('Error', `Customer "${name}" not found.`);
+            }
+        }
+
+        /**
+         * Deletes the currently displayed customer from localStorage.
+         */
+        async function deleteCustomer() {
+            const customerName = customerNameInput.value.trim();
+
+            if (!customerName) {
+                showMessageBox('Deletion Error', 'No customer name entered or selected to delete.');
+                return;
+            }
+
+            const confirmed = await showConfirmBox(
+                'Confirm Deletion',
+                `Are you sure you want to delete customer "${customerName}"? This action cannot be undone.`
+            );
+
+            if (confirmed) {
+                let customers = loadCustomersFromLocalStorage();
+                const initialLength = customers.length;
+                customers = customers.filter(c => c.customerName !== customerName);
+
+                if (customers.length < initialLength) {
+                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(customers));
+                    clearFormAndResults();
+                    renderCustomerList();
+                    showMessageBox('Success', `Customer "${customerName}" deleted successfully.`);
+                } else {
+                    showMessageBox('Deletion Error', `Customer "${customerName}" not found in saved list.`);
+                }
+            } else {
+                showMessageBox('Deletion Canceled', 'Customer deletion has been canceled.');
+            }
+        }
+
+        // Event listener for form submission
+        customerForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            if (!validateInputs()) {
+                return;
+            }
+
+            // Get input values
+            const customerName = customerNameInput.value.trim();
+            const numBeers = parseInt(numBeersInput.value, 10);
+            const daysStayed = parseInt(daysStayedInput.value, 10);
+            const beerPrice = parseFloat(beerPriceInput.value);
+            const roomPrice = parseFloat(roomPriceInput.value);
+            const moneyInserted = parseFloat(moneyInsertedInput.value);
+
+            // Calculate status using dynamic prices
+            const { totalPrice, balance } = calculateStatus(numBeers, daysStayed, beerPrice, roomPrice, moneyInserted);
+
+            // Update the display
+            updateDisplay(customerName, totalPrice, moneyInserted, balance);
+
+            // Alert based on balance
+            if (balance >= 0) {
+                const message = balance === 0
+                    ? `Customer ${customerName} has paid the exact total of UGX${totalPrice.toFixed(2)}. No balance due.`
+                    : `Customer ${customerName} has overpaid. Total price was UGX${totalPrice.toFixed(2)}, and UGX${moneyInserted.toFixed(2)} was inserted. Change due: UGX${balance.toFixed(2)}.`;
+                showMessageBox('Payment Status', message);
+            } else {
+                showMessageBox('Payment Status', `Customer ${customerName} still owes UGX${Math.abs(balance).toFixed(2)}.`);
+            }
+        });
+
+        // Event listener for Save Customer button
+        saveCustomerBtn.addEventListener('click', () => {
+            if (!validateInputs()) {
+                return;
+            }
+
+            const customerName = customerNameInput.value.trim();
+            const numBeers = parseInt(numBeersInput.value, 10);
+            const daysStayed = parseInt(daysStayedInput.value, 10);
+            const beerPrice = parseFloat(beerPriceInput.value);
+            const roomPrice = parseFloat(roomPriceInput.value);
+            const moneyInserted = parseFloat(moneyInsertedInput.value);
+
+            const customerData = {
+                customerName,
+                numBeers,
+                daysStayed,
+                beerPrice,
+                roomPrice,
+                moneyInserted
+            };
+
+            saveCustomerToLocalStorage(customerData);
+            showMessageBox('Success', `Customer "${customerName}" saved successfully!`);
+        });
+
+        // Event listener for Delete Customer button
+        deleteCustomerBtn.addEventListener('click', deleteCustomer);
+
+        // Initial render of customer list when the page loads
+        document.addEventListener('DOMContentLoaded', renderCustomerList);
     </script>
+    {% endverbatim %}
 </body>
 </html>

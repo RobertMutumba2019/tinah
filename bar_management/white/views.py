@@ -1,40 +1,33 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.admin.views.decorators import staff_member_required
-from .models import Customer_statusProfile, Receipt
-from .forms import ClientForm, ReceiptForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
 
-@staff_member_required
-def customer_status(request):
-    
-    profiles = Customer_statusProfile.objects.all()
-    # Some logic accessing profile.room_price_per_day
-    return render(request, 'customer_status.html', {'profiles': profiles})
+def is_admin(user):
+    return user.is_superuser
+
+def custom_login(request):
     if request.method == 'POST':
-        if 'add_client' in request.POST:
-            client_form = ClientForm(request.POST)
-            if client_form.is_valid():
-                client_form.save()
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            if user.is_superuser:
+                login(request, user)
                 return redirect('customer_status')
-        elif 'add_receipt' in request.POST:
-            receipt_form = ReceiptForm(request.POST)
-            if receipt_form.is_valid():
-                receipt_form.save()
-                return redirect('customer_status')
-        elif 'delete_client' in request.POST:
-            client_id = request.POST.get('client_id')
-            client = get_object_or_404(Customer_statusProfile, id=client_id)
-            client.user.delete()
-            return redirect('customer_status')
-    else:
-        client_form = ClientForm()
-        receipt_form = ReceiptForm()
-    
-    clients = Customer_statusProfile.objects.all()
-    return render(request, 'customer_status.html', {
-        'clients': clients,
-        'client_form': client_form,
-        'receipt_form': receipt_form
-    })
+            else:
+                messages.error(request, 'You must be an admin to access this page.')
+        else:
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'login.html')
+
+@login_required
+@user_passes_test(is_admin, login_url='/login/', redirect_field_name=None)
+def customer_status(request):
+    # Log out the user to force re-authentication on next access/refresh
+    logout(request)
+    return render(request, 'customer_status.html')
+
 
 def index(request):
     return render(request, 'index.html')
