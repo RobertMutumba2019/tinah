@@ -53,19 +53,19 @@
 
             <div>
                 <label for="beerPrice" class="block text-sm font-medium text-gray-700 mb-1">Price Per Beer (UGX):</label>
-                <input type="number" id="beerPrice" name="beerPrice" min="0" value="5000.00" step="0.01" required
+                <input type="number" id="beerPrice" name="beerPrice" min="0" value="5000" required
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
 
             <div>
                 <label for="roomPrice" class="block text-sm font-medium text-gray-700 mb-1">Price Per Day (Room) (UGX):</label>
-                <input type="number" id="roomPrice" name="roomPrice" min="0" value="50000.00" step="0.01" required
+                <input type="number" id="roomPrice" name="roomPrice" min="0" value="50000" required
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
 
             <div>
                 <label for="moneyInserted" class="block text-sm font-medium text-gray-700 mb-1">Money Inserted (UGX):</label>
-                <input type="number" id="moneyInserted" name="moneyInserted" min="0" value="0" step="0.01" required
+                <input type="number" id="moneyInserted" name="moneyInserted" min="0" value="0" required
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
 
@@ -93,6 +93,11 @@
 
         <div class="mt-6">
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Saved Customers:</h2>
+            <div class="mb-4">
+                <label for="customerSearchInput" class="block text-sm font-medium text-gray-700 mb-1">Search Customer:</label>
+                <input type="text" id="customerSearchInput" placeholder="Type name to search..."
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
             <div id="customerList" class="border border-gray-200 rounded-md p-2 max-h-48 overflow-y-auto customer-list-container">
                 <p class="text-gray-500 text-sm" id="noCustomersMessage">No customers saved yet.</p>
                 </div>
@@ -145,6 +150,7 @@
         const deleteCustomerBtn = document.getElementById('deleteCustomerBtn');
         const customerListDiv = document.getElementById('customerList');
         const noCustomersMessage = document.getElementById('noCustomersMessage');
+        const customerSearchInput = document.getElementById('customerSearchInput'); 
 
         const messageBox = document.getElementById('messageBox');
         const messageBoxTitle = document.getElementById('messageBoxTitle');
@@ -204,7 +210,6 @@
             });
         }
 
-
         /**
          * Validates form inputs.
          * @returns {boolean} True if inputs are valid, false otherwise.
@@ -213,6 +218,7 @@
             const customerName = customerNameInput.value.trim();
             const numBeers = parseInt(numBeersInput.value, 10);
             const daysStayed = parseInt(daysStayedInput.value, 10);
+            // Use parseFloat for prices as input type is number, even if we remove step
             const beerPrice = parseFloat(beerPriceInput.value);
             const roomPrice = parseFloat(roomPriceInput.value);
             const moneyInserted = parseFloat(moneyInsertedInput.value);
@@ -270,9 +276,9 @@
          */
         function updateDisplay(customerName, totalPrice, moneyInserted, balance) {
             displayCustomerName.textContent = customerName;
-            displayTotalPrice.textContent = totalPrice.toFixed(2);
-            displayMoneyInserted.textContent = moneyInserted.toFixed(2);
-            displayBalance.textContent = balance.toFixed(2);
+            displayTotalPrice.textContent = totalPrice; // Removed .toFixed(2)
+            displayMoneyInserted.textContent = moneyInserted; // Removed .toFixed(2)
+            displayBalance.textContent = balance; // Removed .toFixed(2)
 
             // Apply color based on balance
             if (balance < 0) {
@@ -292,10 +298,12 @@
             customerNameInput.value = '';
             numBeersInput.value = '0';
             daysStayedInput.value = '0';
-            beerPriceInput.value = '5000.00'; // Reset to default UGX
-            roomPriceInput.value = '50000.00'; // Reset to default UGX
+            beerPriceInput.value = '5000'; // Removed .00
+            roomPriceInput.value = '50000'; // Removed .00
             moneyInsertedInput.value = '0';
             resultsDiv.classList.add('hidden');
+            customerSearchInput.value = '';
+            filterCustomerList();
         }
 
         /**
@@ -329,12 +337,13 @@
         function renderCustomerList() {
             const customers = loadCustomersFromLocalStorage();
             customerListDiv.innerHTML = ''; // Clear existing list
+            noCustomersMessage.textContent = "No customers saved yet."; // Reset default message
 
             if (customers.length === 0) {
                 noCustomersMessage.classList.remove('hidden');
                 customerListDiv.appendChild(noCustomersMessage);
             } else {
-                noCustomersMessage.classList.add('hidden');
+                noCustomersMessage.classList.add('hidden'); // Hide if there are customers
                 customers.forEach(customer => {
                     const customerItem = document.createElement('div');
                     customerItem.className = 'p-2 border-b border-gray-200 last:border-b-0 cursor-pointer hover:bg-gray-100 rounded-md transition duration-150 ease-in-out';
@@ -343,6 +352,10 @@
                     customerItem.addEventListener('click', () => loadCustomerData(customer.customerName));
                     customerListDiv.appendChild(customerItem);
                 });
+            }
+            // After rendering, apply any existing filter if there's a search term
+            if (customerSearchInput.value.trim() !== '') {
+                filterCustomerList();
             }
         }
 
@@ -359,8 +372,8 @@
                 numBeersInput.value = customer.numBeers;
                 daysStayedInput.value = customer.daysStayed;
                 // Provide default UGX values if prices were not saved with older customer data
-                beerPriceInput.value = customer.beerPrice !== undefined ? customer.beerPrice.toFixed(2) : '5000.00';
-                roomPriceInput.value = customer.roomPrice !== undefined ? customer.roomPrice.toFixed(2) : '50000.00';
+                beerPriceInput.value = customer.beerPrice !== undefined ? customer.beerPrice : '5000'; // Removed .toFixed(2) and .00
+                roomPriceInput.value = customer.roomPrice !== undefined ? customer.roomPrice : '50000'; // Removed .toFixed(2) and .00
                 moneyInsertedInput.value = customer.moneyInserted;
 
                 // Recalculate and display for the loaded customer
@@ -372,8 +385,36 @@
                     customer.moneyInserted
                 );
                 updateDisplay(customer.customerName, totalPrice, customer.moneyInserted, balance);
+                customerSearchInput.value = '';
+                filterCustomerList();
             } else {
                 showMessageBox('Error', `Customer "${name}" not found.`);
+            }
+        }
+
+        /**
+         * Filters the list of displayed customers based on the search input.
+         */
+        function filterCustomerList() {
+            const searchTerm = customerSearchInput.value.toLowerCase();
+            const customerItems = customerListDiv.querySelectorAll('div[data-customer-name]');
+            let foundMatches = false;
+
+            customerItems.forEach(item => {
+                const customerName = item.textContent.toLowerCase();
+                if (customerName.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    foundMatches = true;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            if (foundMatches || searchTerm === '') {
+                noCustomersMessage.classList.add('hidden');
+            } else {
+                noCustomersMessage.classList.remove('hidden');
+                noCustomersMessage.textContent = "No matching customers found.";
             }
         }
 
@@ -413,13 +454,12 @@
 
         // Event listener for form submission
         customerForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
             if (!validateInputs()) {
                 return;
             }
 
-            // Get input values
             const customerName = customerNameInput.value.trim();
             const numBeers = parseInt(numBeersInput.value, 10);
             const daysStayed = parseInt(daysStayedInput.value, 10);
@@ -427,20 +467,17 @@
             const roomPrice = parseFloat(roomPriceInput.value);
             const moneyInserted = parseFloat(moneyInsertedInput.value);
 
-            // Calculate status using dynamic prices
             const { totalPrice, balance } = calculateStatus(numBeers, daysStayed, beerPrice, roomPrice, moneyInserted);
 
-            // Update the display
             updateDisplay(customerName, totalPrice, moneyInserted, balance);
 
-            // Alert based on balance
             if (balance >= 0) {
                 const message = balance === 0
-                    ? `Customer ${customerName} has paid the exact total of UGX${totalPrice.toFixed(2)}. No balance due.`
-                    : `Customer ${customerName} has overpaid. Total price was UGX${totalPrice.toFixed(2)}, and UGX${moneyInserted.toFixed(2)} was inserted. Change due: UGX${balance.toFixed(2)}.`;
+                    ? `Customer ${customerName} has paid the exact total of UGX${totalPrice}. No balance due.` // Removed .toFixed(2)
+                    : `Customer ${customerName} has overpaid. Total price was UGX${totalPrice}, and UGX${moneyInserted} was inserted. Change due: UGX${balance}.`; // Removed .toFixed(2)
                 showMessageBox('Payment Status', message);
             } else {
-                showMessageBox('Payment Status', `Customer ${customerName} still owes UGX${Math.abs(balance).toFixed(2)}.`);
+                showMessageBox('Payment Status', `Customer ${customerName} still owes UGX${Math.abs(balance)}.`); // Removed .toFixed(2)
             }
         });
 
@@ -472,6 +509,9 @@
 
         // Event listener for Delete Customer button
         deleteCustomerBtn.addEventListener('click', deleteCustomer);
+
+        // New: Event listener for the search input to filter the list
+        customerSearchInput.addEventListener('keyup', filterCustomerList);
 
         // Initial render of customer list when the page loads
         document.addEventListener('DOMContentLoaded', renderCustomerList);
