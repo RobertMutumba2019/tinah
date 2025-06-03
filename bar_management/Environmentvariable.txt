@@ -1,0 +1,5 @@
+SECRET_KEY = 'django-insecure-xvlj6d(w+=w9-)#6b#4tm04txtya@il!^5otv6qzb7c7@vc!f='
+'NAME': 'koyebdb'
+'USER': 'koyeb-adm'
+'PASSWORD': 'npg_Ld13ZkYzisvI'
+'HOST': 'ep-twilight-dew-a28xwl0i.eu-central-1.pg.koyeb.app'
